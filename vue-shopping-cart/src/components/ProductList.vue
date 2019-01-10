@@ -14,14 +14,16 @@ import {  mapState, mapGetters, mapMutations, mapActions   } from 'vuex';
 
 export default {
     name: 'ProductList',
+
     mounted: function(){
       //  alert(this.$store.state.products.length);
     },
 
     computed : {
-        ...mapState([
-            'products'
-        ]),
+        // for state, even if namespeace is false, we need to indicate module name that contains state we want
+        ...mapState({
+            products: state => state.product.products
+         }),
 
         ...mapGetters([
             'saleProducts'

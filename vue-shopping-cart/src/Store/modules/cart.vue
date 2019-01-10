@@ -1,13 +1,9 @@
 <script>
-    import Vue from 'vue';
-    import Vuex   from 'vuex';
-
-    Vue.use(Vuex);
-
     const saledProductIds = [2 ,3];
     const carts = [];
     export default (
         {
+           // namespaced: false,
             state: {
                 products: [{id: 1, title: 'Washing machine', price: '10000'},  {id: 2, title: 'Car', price: '20000'},{id: 3, title: 'Air plane', price: '30000'}]
             },
