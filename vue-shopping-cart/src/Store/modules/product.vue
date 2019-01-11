@@ -1,31 +1,24 @@
 <script>
-    const saledProductIds = [2 ,3];
-    const carts = [];
-    export default (
+    //const saledProductIds = [2 ,3];
+
+export default (
         {
-         //   namespaced: true,
+            namespaced: true,
             state: {
-                products: [{id: 1, title: 'Washing machine', price: '10000'},  {id: 2, title: 'Car', price: '20000'},{id: 3, title: 'Air plane', price: '30000'}]
+                products: [
+                            {id: 1, title: 'Washing machine', price: '10000', quantity: 5},
+                            {id: 2, title: 'Car', price: '20000', quantity: 3},
+                            {id: 3, title: 'Air plane', price: '30000', quantity: 6}
+                          ]
             },
 
             getters: {
-                saleProducts: state => {
-                    return state.products.filter(item => saledProductIds.includes(item.id));
-                }
+                allProducts: state => {
+                    return state.products;
+                },
             },
 
             mutations:{
-                addToCart(state, productId, cartId){
-                    var cart = carts.find(item => item.cardId === cartId);
-                    if (!cart){
-                        cart = {cardId: cartId, productId: productId, quantity: 1};
-                        carts.push(cart);
-                    }
-                    else{
-                        cart.quantity++;
-                    }
-                },
-
                 showMessage(state, msg){
                     alert(msg);
                 }

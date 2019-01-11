@@ -1,16 +1,16 @@
 <template>
     <ul>
-        <li v-for="item in products" :key="item.id">
+        <li v-for="item in allProducts" :key="item.id">
             {{item.title}} - {{item.price}}
             <br>
 
-            <button @click="showMsg(item.title)">Add to cart</button>
+            <button :disabled="!item.quantity" @click="insertOrUpdateCart(item)">Add to cart</button>
         </li>
     </ul>
 </template>
 
 <script>
-import {  mapState, mapGetters, mapMutations, mapActions   } from 'vuex';
+import {  mapGetters, mapMutations, mapActions   } from 'vuex';
 
 export default {
     name: 'ProductList',
@@ -21,16 +21,9 @@ export default {
 
     computed : {
         // for state, even if namespeace is false, we need to indicate module name that contains state we want
-        ...mapState({
-            products: state => state.product.products
-         }),
-
-        ...mapGetters([
-            'saleProducts'
+        ...mapGetters('product', [
+            'allProducts'
         ]),
-        // products(){
-        //     return this.$store.getters.saleProducts;
-        // }
     },
 
     methods:{
@@ -40,7 +33,8 @@ export default {
         }),
 
         ...mapActions({
-             showMsg: 'showMessage'
+             showMsg: 'showMessage',
+             insertOrUpdateCart: 'insertOrUpdateCart'
         })
     }
 }

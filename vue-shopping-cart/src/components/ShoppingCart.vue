@@ -2,29 +2,52 @@
     <div class="cart">
         <h2>Your Cart</h2>
         <ul>
-            <li v-for="item in products" :key="item.id">
+            <li v-for="item in normalizedProductsInCart" :key="item.id">
                     {{ item.title }} - {{ item.price }} x {{ item.quantity }}
             </li>
         </ul>
        
-        <p>Total: 1000000 usd</p>
+        <p>Total: {{amoungOfMoney}}</p>
         <p><button>Checkout</button></p>
-        <p>Checkout.</p>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     name : 'ShoppingCart',
-    
-    data() {
-        return {
-             products: [
-                        {id: 1, title: 'Washing machine', price: '10000', quantity: 5},
-                        {id: 2, title: 'Car', price: '20000', quantity: 6},
-                        {id: 3, title: 'Air plane', price: '30000', quantity: 10}
-                      ]
-        }
+
+computed: {
+       normalizedProductsInCart() {
+           var items = this.cartProducts.map((cartProd) => {
+               var prod = this.allProducts.find(entry => entry.id == cartProd.id);
+               if (!prod){
+                   return null;
+               }
+
+                return {
+                    id: cartProd.id,
+                    title: prod.title,
+                    price: prod.price,
+                    quantity: cartProd.quantity
+                };
+           }, this) ;
+
+           return items.filter(entry => entry != null);
+       },
+
+       amoungOfMoney(){
+           var amount = 0;
+           this.normalizedProductsInCart.forEach(element => {
+               amount  += element.price * element.quantity;
+           });
+
+           return amount;
+       },
+
+        ...mapGetters(['cartProducts']),
+        ...mapGetters('product', ['allProducts']),
     }
 }
 </script>
